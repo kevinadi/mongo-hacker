@@ -72,6 +72,16 @@ var random = {
     date : function(year) {
         year = year || (new Date()).getFullYear();
         return new Date(year, random.randint(12), random.randint(30) + 1, 0, 0, random.randint(86400));
+    },
+
+    geopoint : function() {
+        return {
+            "type" : "Point",
+            coordinates : [
+                Math.random() > 0.5 ? Math.random() * 180 : -Math.random() * 180,
+                Math.random() > 0.5 ? Math.random() * 90 : -Math.random() * 90
+            ]
+        }
     }
 
 }
