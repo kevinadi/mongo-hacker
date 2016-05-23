@@ -94,7 +94,7 @@ var randoc = {
         return r.array(n, function () {
             return {
                 geometry : r.geopoint(),
-                type : r.string(),
+                tag : r.string(),
                 tags : r.string(r.randint(1,5)).split(' ')
             }
         });
