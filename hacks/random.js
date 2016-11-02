@@ -5,31 +5,20 @@ var random = {
         "Foxtrot", "Golf", "Hotel", "India", "Juliet",
         "Kilo", "Lima", "Mike", "November", "Oscar",
         "Papa", "Quebec", "Romeo", "Sierra", "Tango",
-        "Unicorn", "Victor", "Whiskey", "Xray", "Yankee", "Zulu",
-        "Able","Baker","Charlie","Dog","Easy",
-        "Fox","George","How","Item","Jig",
-        "King","Love","Mike","Nan","Oboe",
-        "Peter","Queen","Roger","Sugar","Tare",
-        "Uncle","Victor","William","X-ray","Yoke","Zebra"
+        "Unicorn", "Victor", "Whiskey", "Xray", "Yankee", "Zulu"
     ],
 
-    _numstr : "0123456789",
+    _alphanum : 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
-    randint : function(a, b) {
+    int : function(a, b) {
         switch (arguments.length) {
+            case 0:
+                return Math.floor(Math.random() * 100);
             case 1:
                 return Math.floor(Math.random() * a);
             default:
                 return a + Math.floor(Math.random() * (b-a));
         }
-    },
-
-    keyval : function() {
-        var out = {};
-        for (var i = 0; i < arguments.length; i+=2) {
-            out[arguments[i]] = arguments[i+1]();
-        }
-        return out;
     },
 
     array : function(n, func) {
@@ -44,37 +33,25 @@ var random = {
         var words = words || random._phonetics;
         var n = n || 1;
         var len = words.length;
-        var out = random.array(n, function(){return words[random.randint(len)]});
+        var out = random.array(n, function(){return words[random.int(len)]});
         return out.join(" ");
     },
 
     char : function(n) {
         var out = "";
+        var idx = random._alphanum.length - 1;
         while (out.length < n) {
-            out += random.string() + " ";
+            out += random._alphanum[r.int(idx)];
         }
-        return out.slice(0, n);
-    },
-
-    number : function(len,frac) {
-        switch (arguments.length) {
-            case 0:
-                var len = 3;
-            case 1:
-                var out = (len > 0) ? [random.randint(1,10)] : [0];
-                out = out.concat(random.array(len-1, function(){return random._numstr[random.randint(10)]}));
-                return Number(out.join(""));
-            case 2:
-                return Number(random.number(len) + "." + random.number(frac));
-        }
+        return out
     },
 
     date : function(year) {
         year = year || (new Date()).getFullYear();
-        return new Date(year, random.randint(12), random.randint(30) + 1, 0, 0, random.randint(86400));
+        return new Date(year, random.int(12), random.int(30) + 1, 0, 0, random.int(86400));
     },
 
-    geopoint : function() {
+    geo : function() {
         return {
             "type" : "Point",
             coordinates : [
