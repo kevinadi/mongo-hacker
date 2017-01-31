@@ -48,17 +48,31 @@ function printPaddedColumns() {
     for (i = 0; i < arguments[0].length; i++) {
         row = "";
         for (j = 0; j < arguments.length; j++) {
-            row += arguments[j][i].toString().pad(columnWidths[j], (j == 0));
-            if (j < (arguments.length - 1)) {
-                separator = ((j == 0) ?
+            var separator = ""
+            var val = arguments[j][i].toString();
+            if (!val && j >= arguments.length - 1) { continue; }
+            val = val.pad(columnWidths[j], (j == 0));
+            if (j > 0) {
+                separator = " " + ((j == 1) ?
                     mongo_hacker_config['column_separator'] :
                     mongo_hacker_config['value_separator']
-                );
-                row += " " + separator + " ";
+                ) + " ";
             }
+            row += separator + val;
         }
         print(row);
     }
 
     return null;
 };
+
+function runOnDbs(regexp, callback) {
+    var originalDb = db.getName();
+    db.getMongo().getDBs().databases.filter(function(db) {
+        return db.name.match(regexp); }
+    ).forEach(function(dbEntry) {
+        db = db.getSiblingDB(dbEntry.name);
+        callback(db);
+    });
+    db = db.getSiblingDB(originalDb);
+}
