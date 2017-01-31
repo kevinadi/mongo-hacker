@@ -59,6 +59,10 @@ var random = {
                 Math.random() > 0.5 ? Math.random() * 90 : -Math.random() * 90
             ]
         }
+    },
+
+    bool : function() {
+        return Math.random() > 0.5
     }
 
 }
