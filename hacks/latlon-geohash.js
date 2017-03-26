@@ -234,6 +234,24 @@ Geohash.neighbours = function(geohash) {
 };
 
 
+/**
+ * GeoJSON Point encode
+ */
+Geohash.encodeJSON = function(geojson) {
+    return Geohash.encode(geojson.coordinates[1], geojson.coordinates[0])
+}
+
+/**
+ * GeoJSON Point decode
+ */
+Geohash.decodeJSON = function(geohash) {
+    var coord = Geohash.decode(geohash)
+    return {
+        type: 'Point',
+        coordinates: [coord.lon, coord.lat]
+    }
+}
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 if (typeof module != 'undefined' && module.exports) module.exports = Geohash; // CommonJS, node.js
 if (typeof define == 'function' && define.amd) define([], function() { return Geohash; }); // AMD
