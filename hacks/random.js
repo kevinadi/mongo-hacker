@@ -51,12 +51,14 @@ var random = {
         return new Date(year, random.int(12), random.int(30) + 1, 0, 0, random.int(86400));
     },
 
-    geo : function() {
+    geo : function(p1, p2) {
+        p1 = p1 || [180, 90]
+        p2 = p2 || [-180, -90]
         return {
             "type" : "Point",
             coordinates : [
-                Math.random() > 0.5 ? Math.random() * 180 : -Math.random() * 180,
-                Math.random() > 0.5 ? Math.random() * 90 : -Math.random() * 90
+                Math.random() * Math.abs(p1[0] - p2[0]) + Math.min(p1[0], p2[0]),
+                Math.random() * Math.abs(p1[1] - p2[1]) + Math.min(p1[1], p2[1])
             ]
         }
     },
