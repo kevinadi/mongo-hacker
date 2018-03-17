@@ -60,7 +60,7 @@ var random = {
                 Math.random() * Math.abs(p1[0] - p2[0]) + Math.min(p1[0], p2[0]),
                 Math.random() * Math.abs(p1[1] - p2[1]) + Math.min(p1[1], p2[1])
             ]
-        }
+        };
     },
 
     bool : function() {
@@ -75,6 +75,6 @@ var random = {
         });
     }
 
-}
+};
 
 var r = random;
